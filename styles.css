@@ -109,26 +109,24 @@ body {
 
 /* submit form */
 .form {
-  height: 40px;
+  height: 60px;
   width: 100%;
-  max-width: 400px;
   padding-top: 10px;
   display: flex;
-  margin: auto;
 }
 
 .form__btn {
-  background: rgb(123, 45, 224);
+  width: 110px;
+  background: rgb(81, 4, 136);
   color: rgb(255, 255, 255);
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
+  border-radius: 0 5px 5px 0;
   font-size: 1.1rem;
 }
 
 .input {
   width: 100%;
   padding-left: 3px;
-  border-radius: 0 0 2px 2px;
+  border-radius: 5px 0 0px 5px;
   border: none;
   font-size: 1.2rem;
 }
@@ -192,8 +190,8 @@ body {
 }
 
 .checkbox {
-  height: 10px;
-  width: 10px;
+  height: 100%;
+  width: 15px;
   outline: none;
   border: none;
 }

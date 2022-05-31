@@ -129,7 +129,6 @@ const noteOptionHandler = (e) => {
   e.preventDefault();
   if (!editFlag) {
     const noteContainer = e.currentTarget.parentNode.parentNode;
-
     if (e.currentTarget.dataset.action === "delete-note") {
       notes.delete(noteContainer.id);
       render();
@@ -137,6 +136,7 @@ const noteOptionHandler = (e) => {
     } else if (e.currentTarget.dataset.action === "edit-note") {
       editFlag = true;
       editID = noteContainer.id;
+      
       noteContainer.classList.add("edit");
       noteContainer.innerHTML = noteContainer.innerHTML;
       input_input.value =

@@ -10,9 +10,7 @@ class Notes {
     this.active = [];
     this.done = [];
     this.deleted = [];
-
     this.load();
-    console.log(this.active);
   }
 
   load() {
@@ -50,11 +48,17 @@ class Notes {
     this.active = this.active.filter((el) => {
       return el.id === id ? (el.text = text) : (el.text = el.text);
     });
+    this.done = this.done.filter((el) => {
+      return el.id === id ? (el.text = text) : (el.text = el.text);
+    });
+    this.deleted = this.deleted.filter((el) => {
+      return el.id === id ? (el.text = text) : (el.text = el.text);
+    });
   }
 
   moveToDone(id) {
     this.active = this.active.filter((el) => {
-      this.done.push(el);
+      el.id === id && this.done.push(el);
       return el.id !== id;
     });
   }
@@ -70,8 +74,7 @@ const notes = new Notes();
 let editFlag = false;
 let editID = null;
 
-//********* functions ******
-
+//********* Functions *********
 const render = () => {
   let toRender = [];
   // look what supposed to be rendered
@@ -92,10 +95,10 @@ const render = () => {
                     <label class="note__text">${el.text}</label>
                     <div class="note__options">
                         <button type="submit" data-action="edit-note" class="btn note__btn">
-                            <svg viewBox="0 0 58 58" width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"><path d="M8.071 21.586l-7.071 1.414 1.414-7.071 14.929-14.929 5.657 5.657-14.929 14.929zm-.493-.921l-4.243-4.243-1.06 5.303 5.303-1.06zm9.765-18.251l-13.3 13.301 4.242 4.242 13.301-13.3-4.243-4.243z"/></svg>
+                            <svg viewBox="0 0 47 47" width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"><path d="M8.071 21.586l-7.071 1.414 1.414-7.071 14.929-14.929 5.657 5.657-14.929 14.929zm-.493-.921l-4.243-4.243-1.06 5.303 5.303-1.06zm9.765-18.251l-13.3 13.301 4.242 4.242 13.301-13.3-4.243-4.243z"/></svg>
                         </button>
                         <button type="submit" data-action="delete-note" class="btn note__btn">
-                            <svg viewBox="0 0 58 58" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                            <svg viewBox="0 0 47 47" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                 <path
                                 d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z" />
                             </svg>
@@ -117,7 +120,6 @@ const render = () => {
 
 const notesCheckboxHandler = (e) => {
   e.preventDefault();
-  console.log(e.currentTarget.parentNode.id);
   notes.moveToDone(e.currentTarget.parentNode.id);
   notes.save();
   render();
@@ -137,7 +139,6 @@ const noteOptionHandler = (e) => {
       editID = noteContainer.id;
       noteContainer.classList.add("edit");
       noteContainer.innerHTML = noteContainer.innerHTML;
-      console.log([...noteContainer.classList]);
       input_input.value =
         noteContainer.firstElementChild.nextElementSibling.innerHTML;
     }
@@ -163,17 +164,17 @@ const submitNoteHandler = (e) => {
 };
 
 const menuHandler = (e) => {
-  // check what was clicked
-  if (e.target.classList[0] === "btn") {
-    // set global display state
-    // reset highlight for menu btns
-    [...e.target.parentNode.children].forEach((btn) => {
-      btn.classList.remove("highlight");
-    });
-    // add highlight class for current menu tab
-    e.target.classList.add("highlight");
-    displayState = e.target.dataset.action;
+  // filter missed clicks
+  if (e.target.classList[0] === "menu") {
+    return;
   }
+  // reset highlight for menu btns
+  [...e.target.parentNode.children].forEach((btn) => {
+    btn.classList.remove("highlight");
+  });
+  // add highlight class for current menu tab
+  e.target.classList.add("highlight");
+  displayState = e.target.dataset.action;
   render();
 };
 
@@ -186,4 +187,5 @@ const init = () => {
   render();
 };
 
+// ********* INIT *********
 init();

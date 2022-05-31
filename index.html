@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>TODO List vanilla</title>
+</head>
+<body>
+    <main class="main">
+        <header class="title">
+            <h1>todo list vanilla</h1>
+        </header>
+        <nav class="menu">
+            <button type="submit" data-action="show-active" class="btn btn_green">active</button>
+            <button type="submit" data-action="show-done" class="btn">done</button>
+            <button type="submit" data-action="show-deleted" class="btn btn_red">deleted</button>
+            <div class="vertical-line"></div>
+        </nav>
+        <section class="display">
+            <div class="notes-container">
+                
+            </div>
+            <form action="submit" class="form submit-form">
+                <input type="text" name="input" class="input">
+                <button type="submit" class="btn form__btn">submit</button>
+            </form>
+        </section>
+    </main>
+    
+    <script src="script.js"></script>
+</body>
+</html>

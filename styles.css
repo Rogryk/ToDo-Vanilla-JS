@@ -1,0 +1,154 @@
+html {
+  box-sizing: border-box;
+}
+*,
+*::after,
+*::before {
+  box-sizing: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+/* ****** main ****** */
+body {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+  background: #e7e3df;
+}
+
+.main {
+  height: 40vh;
+  max-height: 200px;
+  width: 60vw;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+/* ****** title ****** */
+.title {
+  height: 30%;
+  width: 100%;
+  border-bottom: 2px solid black;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+/* ****** menu ****** */
+.menu {
+  height: 70%;
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  position: relative;
+}
+
+.vertical-line {
+  height: 70%;
+  width: 100%;
+  border-right: 1px solid black;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: -1;
+}
+
+.btn {
+  border: none;
+  background: transparent;
+  border-radius: 2px;
+  text-transform: capitalize;
+  cursor: pointer;
+}
+
+.btn_green {
+  color: rgb(3, 95, 3);
+}
+
+.btn_red {
+  color: rgb(204, 17, 17);
+}
+
+.btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.highlight {
+  background: rgba(255, 255, 255, 0.3);
+  font-weight: 600;
+}
+
+/* ****** display ****** */
+.display {
+  height: 70%;
+  width: 70%;
+  padding: 5px 5px 5px 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* submit form */
+.form {
+  width: 100%;
+  display: flex;
+}
+
+.form__btn {
+  background: rgb(123, 45, 224);
+  color: rgb(255, 255, 255);
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.input {
+  width: 100%;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border: none;
+}
+
+.input:focus {
+  outline: none;
+}
+
+/* notes */
+.note {
+  display: flex;
+  margin-top: 5px;
+  align-items: center;
+  font-size: 0.6rem;
+  position: relative;
+}
+
+.note:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.note__options {
+  height: 100%;
+  width: 25px;
+  position: absolute;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.note__btn {
+  height: 100%;
+  width: 10px;
+  z-index: 999;
+}
+
+.note__edit {
+  height: 5px;
+  width: 5px;
+}
+
+.checkbox {
+  height: 10px;
+  width: 10px;
+}

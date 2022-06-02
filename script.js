@@ -3,6 +3,10 @@ const menu_nav = document.querySelector(".menu");
 const submit_form = document.querySelector(".submit-form");
 const input_input = document.querySelector(".input");
 const notesContainer_div = document.querySelector(".notes-container");
+const popup = document.querySelector(".popup");
+
+const someStr = "qwe";
+someStr.substring;
 
 // Class
 class Notes {
@@ -73,11 +77,12 @@ let displayState = "show-active";
 const notes = new Notes();
 let editFlag = false;
 let editID = null;
+let popupTimer;
 
 //********* Functions *********
 const render = () => {
   let toRender = [];
-  // look what supposed to be rendered
+  // check which category should be rendered
   displayState === "show-active"
     ? (toRender = notes.active)
     : displayState === "show-done"
@@ -120,47 +125,57 @@ const render = () => {
 
 const notesCheckboxHandler = (e) => {
   e.preventDefault();
+  popupHandler("isDone");
   notes.moveToDone(e.currentTarget.parentNode.id);
   notes.save();
   render();
 };
 
 const noteOptionHandler = (e) => {
-  e.preventDefault();
-  if (!editFlag) {
-    const noteContainer = e.currentTarget.parentNode.parentNode;
-    if (e.currentTarget.dataset.action === "delete-note") {
-      notes.delete(noteContainer.id);
-      render();
-      notes.save();
-    } else if (e.currentTarget.dataset.action === "edit-note") {
-      editFlag = true;
-      editID = noteContainer.id;
-      
-      noteContainer.classList.add("edit");
-      noteContainer.innerHTML = noteContainer.innerHTML;
-      input_input.value =
-        noteContainer.firstElementChild.nextElementSibling.innerHTML;
-    }
+  // event.preventDefault();
+  const noteContainer = e.currentTarget.parentNode.parentNode;
+
+  if (editFlag) {
+    return;
+  }
+
+  if (e.currentTarget.dataset.action === "delete-note") {
+    notes.delete(noteContainer.id);
+    popupHandler("isDeleted");
+    notes.save();
+    render();
+  } else if (e.currentTarget.dataset.action === "edit-note") {
+    editFlag = true;
+    editID = noteContainer.id;
+
+    noteContainer.classList.add("edit");
+    noteContainer.innerHTML = noteContainer.innerHTML;
+    input_input.value =
+      noteContainer.firstElementChild.nextElementSibling.innerHTML;
   }
 };
 
 const submitNoteHandler = (e) => {
   e.preventDefault();
   // check if note is empty string
-
-  if (input_input.value.trim() != "") {
-    if (editFlag) {
-      notes.edit(editID, input_input.value);
-      editFlag = false;
-      editID = null;
-    } else {
-      notes.add(input_input.value);
-    }
-    input_input.value = "";
-    render();
+  if (input_input.value.trim() === "") {
+    popupHandler("isError");
+    return;
   }
+  // action depending on editFlag state
+  if (editFlag) {
+    notes.edit(editID, input_input.value);
+    popupHandler("isEdited");
+  } else {
+    popupHandler("isAdded");
+    notes.add(input_input.value);
+  }
+  // reset states, save, render
+  editFlag = false;
+  editID = null;
+  input_input.value = "";
   notes.save();
+  render();
 };
 
 const menuHandler = (e) => {
@@ -169,13 +184,63 @@ const menuHandler = (e) => {
     return;
   }
   // reset highlight for menu btns
-  [...e.target.parentNode.children].forEach((btn) => {
-    btn.classList.remove("highlight");
-  });
+  [...e.target.parentNode.children].forEach((btn) =>
+    btn.classList.remove("highlight")
+  );
   // add highlight class for current menu tab
   e.target.classList.add("highlight");
+  // set displayState
   displayState = e.target.dataset.action;
+  // render
   render();
+};
+
+const popupHandler = (msg) => {
+  let timeoutFlag = null;
+
+  switch (msg) {
+    case "isError": {
+      popup.innerHTML = "wrong input";
+      popup.classList = ["popup"];
+      popup.classList.add("error");
+      break;
+    }
+    case "isEdited": {
+      popup.innerHTML = "note edited";
+      popup.classList = ["popup"];
+      popup.classList.add("green");
+      break;
+    }
+    case "isAdded": {
+      popup.innerHTML = "note added";
+      popup.classList = ["popup"];
+      popup.classList.add("green");
+      break;
+    }
+    case "isDeleted": {
+      popup.innerHTML = "note deleted";
+      popup.classList = ["popup"];
+      popup.classList.add("error");
+      break;
+    }
+    case "isDone": {
+      popup.innerHTML = "Done!";
+      popup.classList = ["popup"];
+      popup.classList.add("green");
+      break;
+    }
+  }
+
+  console.log(popupTimer === "undefined");
+
+  if (popupTimer !== "undefined") {
+    clearTimeout(popupTimer);
+  }
+  popupTimer = setTimeout(() => {
+    popup.classList.remove("error");
+    popup.classList.remove("green");
+    popup.innerHTML = "";
+  }, 2000);
 };
 
 const init = () => {

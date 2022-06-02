@@ -200,3 +200,32 @@ body {
   background: rgba(255, 255, 255, 0.3);
   color: grey;
 }
+
+/* popup */
+.popup {
+  height: 2rem;
+  width: 10rem;
+  border-radius: 8px;
+  position: absolute;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-transform: capitalize;
+  font-weight: 600;
+  opacity: 0;
+  transform: translateY(-100%);
+  transition: linear 0.3s;
+}
+
+.green {
+  background: lightgreen;
+  transform: translateY(-0%);
+  opacity: 1;
+}
+
+.error {
+  background: rgb(247, 37, 37);
+  transform: translateY(-0%);
+  opacity: 1;
+}

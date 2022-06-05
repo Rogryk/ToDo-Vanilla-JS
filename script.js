@@ -120,11 +120,9 @@ const notesCheckboxHandler = (e) => {
 };
 
 const noteOptionHandler = (e) => {
-  event.preventDefault();
+  e.preventDefault();
   const noteContainer = e.currentTarget.parentNode.parentNode;
-
   if (editFlag) return;
-
   if (e.currentTarget.dataset.action === "delete-note") {
     notes.delete(noteContainer.id);
     popupHandler("isDeleted");
@@ -208,7 +206,6 @@ const popupHandler = (msg) => {
   }
 
   if (popupTimer !== "undefined") clearTimeout(popupTimer);
-
   popupTimer = setTimeout(() => {
     popup.classList.remove("error");
     popup.classList.remove("green");

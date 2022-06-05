@@ -5,15 +5,9 @@ const input_input = document.querySelector(".input");
 const notesContainer_div = document.querySelector(".notes-container");
 const popup = document.querySelector(".popup");
 
-const someStr = "qwe";
-someStr.substring;
-
 // Class
 class Notes {
   constructor() {
-    this.active = [];
-    this.done = [];
-    this.deleted = [];
     this.load();
   }
 
@@ -50,7 +44,7 @@ class Notes {
 
   edit(id, text) {
     for (const [groupName, notes] of Object.entries(this)) {
-      notes.filter((note) => {
+      notes.map((note) => {
         return note.id === id ? (note.text = text) : (note.text = note.text);
       });
     }
@@ -63,22 +57,14 @@ class Notes {
     });
   }
 
-  show() {
-    // for (const [notesGroup, notes] of Object.entries(this)) {
-    //   notes.forEach((note) => console.log(note));
-    //   console.log(notes[1]);
-    //   Object.entries(notes.id).forEach((id) => console.log(id));
-    // }
-  }
-
   IDGenerator() {
     return performance.now().toString(36);
   }
 }
 
 // Global constants and variables
-let displayState = "show-active";
 const notes = new Notes();
+let displayState = "show-active";
 let editFlag = false;
 let editID = null;
 let popupTimer;

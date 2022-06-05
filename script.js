@@ -64,13 +64,13 @@ class Notes {
 
 // Global constants and variables
 const notes = new Notes();
-let displayState = "show-active";
+// let displayState = "show-active";
 let editFlag = false;
 let editID = null;
 let popupTimer;
 
 //********* Functions *********
-const render = () => {
+const render = (displayState = "show-active") => {
   let toRender = [];
   // check which category should be rendered
   displayState === "show-active"
@@ -166,17 +166,15 @@ const submitNoteHandler = (e) => {
 const menuHandler = (e) => {
   // filter missed clicks
   if (e.target.classList[0] === "menu") return;
-
   // reset highlight for menu btns
   [...e.target.parentNode.children].forEach((btn) =>
     btn.classList.remove("highlight")
   );
   // add highlight class for current menu tab
   e.target.classList.add("highlight");
-  // set displayState
-  displayState = e.target.dataset.action;
-  // render
-  render();
+  // set displayState and render
+  const displayState = e.target.dataset.action;
+  render(displayState);
 };
 
 const popupHandler = (msg) => {
@@ -236,5 +234,4 @@ const popupError = () => {
   submit_form.addEventListener("submit", submitNoteHandler);
   // initial display
   render();
-  notes.show();
 })();

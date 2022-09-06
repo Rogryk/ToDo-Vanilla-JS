@@ -86,19 +86,32 @@ const render = (displayState = "show-active") => {
     const newElement = document.createElement("form");
     newElement.id = el.id;
     newElement.classList.add("note");
-    newElement.innerHTML = `<input type="checkbox" name="checkbox" class='checkbox'>
+    newElement.innerHTML = `${
+      displayState === "show-active"
+        ? `<input type="checkbox" name="checkbox" class='checkbox'>`
+        : ""
+    }
                     <label class="note__text">${el.text}</label>
-                    <div class="note__options">
-                        <button type="submit" data-action="edit-note" class="btn note__btn">
-                            <svg viewBox="0 0 47 47" width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"><path d="M8.071 21.586l-7.071 1.414 1.414-7.071 14.929-14.929 5.657 5.657-14.929 14.929zm-.493-.921l-4.243-4.243-1.06 5.303 5.303-1.06zm9.765-18.251l-13.3 13.301 4.242 4.242 13.301-13.3-4.243-4.243z"/></svg>
-                        </button>
-                        <button type="submit" data-action="delete-note" class="btn note__btn">
-                            <svg viewBox="0 0 47 47" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                                <path
-                                d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z" />
-                            </svg>
-                        </button>
-                    </div>`;
+ ${
+   displayState !== "show-deleted"
+     ? `<div class="note__options">
+     ${
+       displayState !== "show-done"
+         ? `<button type="submit" data-action="edit-note" class="btn note__btn">
+         <svg viewBox="0 0 47 47" width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"><path d="M8.071 21.586l-7.071 1.414 1.414-7.071 14.929-14.929 5.657 5.657-14.929 14.929zm-.493-.921l-4.243-4.243-1.06 5.303 5.303-1.06zm9.765-18.251l-13.3 13.301 4.242 4.242 13.301-13.3-4.243-4.243z"/></svg>
+     </button>`
+         : ""
+     }
+     <button type="submit" data-action="delete-note" class="btn note__btn">
+         <svg viewBox="0 0 47 47" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+             <path
+             d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z" />
+         </svg>
+     </button>
+ </div>`
+     : ""
+ }`;
+
     notesContainer_div.appendChild(newElement);
     // event listeners for every single note
     [...notesContainer_div.children].forEach((note) => {
@@ -113,6 +126,7 @@ const render = (displayState = "show-active") => {
 
 const notesCheckboxHandler = (e) => {
   e.preventDefault();
+  console.log(e.currentTarget.parentNode);
   popupHandler("isDone");
   notes.moveToDone(e.currentTarget.parentNode.id);
   notes.save();
